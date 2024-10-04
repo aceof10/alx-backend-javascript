@@ -5,9 +5,17 @@ export default function handleProfileSignup(firstName, lastName, fileName) {
   const userSignupPromise = signUpUser(firstName, lastName);
   const photoUploadPromise = uploadPhoto(fileName);
 
-  return Promise.allSettled([userSignupPromise, photoUploadPromise])
-    .then((results) => results.map((result) => ({
-      status: result.status,
-      value: result.status === 'fulfilled' ? result.value : result.reason,
-    })));
+  return Promise.allSettled([userSignupPromise, photoUploadPromise]).then((values) => {
+    const result = [];
+
+    values.forEach((element) => {
+      if (element.status === 'fulfilled') {
+        result.push({ status: element.status, value: element.value });
+      } else {
+        result.push({ status: element.status, value: `${element.reason}` });
+      }
+    });
+
+    return result;
+  });
 }
