@@ -1,3 +1,6 @@
-/*/node_modules/
-/*/.idea
-/*/*-main*
+*/.idea
+
+*/*-main*
+
+**/node_modules/
+**/dist/
